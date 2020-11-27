@@ -1,25 +1,31 @@
 import UI.MainUI;
-import WebCrawler.CrawlerManager;
+import UI.menuType.OptionsListMenu;
 
-import java.util.Arrays;
+import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) {
-//        CrawlerManager crawlerManager = CrawlerManager.getCrawlerManager();
-//
-//        System.out.println(Arrays.toString(crawlerManager.getSupportedTasks()));
-//
-//        crawlerManager.addTaskRunner(0);
-//        crawlerManager.addTaskRunner(1);
-//        System.out.println(Arrays.toString(crawlerManager.getRunnersTaskStatus()));
-//        crawlerManager.commitAllRunners();
-//        Thread.sleep(1000);
-//        System.out.println(Arrays.toString(crawlerManager.getRunnersTaskStatus()));
-//        Thread.sleep(10000);
-//        System.out.println(crawlerManager.tempTestQueryProgress());
+        Scanner cmdScanner = new Scanner(System.in);
 
+        MainUI mainUI = MainUI.getMainUI();
+        mainUI.uiStartUp();
 
-        MainUI ui = MainUI.getMainUI();
-        ui.uiStartUp();
+        do {
+            showListMenu(mainUI);
+            int option = cmdScanner.nextInt() - 1;
+            mainUI.performOption(option);
+        } while (!mainUI.isWantToExit());
+
+        cmdScanner.close();
+    }
+
+    private static void showListMenu(OptionsListMenu ui) {
+        System.out.println("\n* " + ui.getMenuName() + " *");
+        String[] options = ui.getMenuOptions();
+        for (int i = 1; i <= options.length; i++) {
+            System.out.printf("[%d] %s\n", i, options[i-1]);
+        }
+        System.out.println();
     }
 }

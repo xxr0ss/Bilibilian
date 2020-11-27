@@ -46,6 +46,8 @@ public class CrawlerManager {
         };
     }
 
+    // TODO: 维护一个Runners列表
+
     /**
      * 获取WebCrawler.Tasks底下继承Task的类的名字
      * @return 任务名数组
@@ -66,26 +68,34 @@ public class CrawlerManager {
 
     private final List<TaskRunner> runnersList = new ArrayList<>();
 
+    public List<TaskRunner> getRunnersList() {
+        return runnersList;
+    }
+
     /**
      * 往Runner列表添加计划task
      * @param taskId 支持的task在getSupportedTasks() 数组的下标
+     * @return 添加的runner id, 也就是在runnersList 上的下标
      */
-    public void addTaskRunner(int taskId) {
+    public int addTaskRunner(int taskId) {
+        int index = runnersList.size();
         TaskRunner runner = new TaskRunner(tasks[taskId]);
         runnersList.add(runner);
+
+        return index;
     }
 
     /**
      * 完成所有Runner的添加（和配置）后，一次性提交。
      */
-    public void commitAllRunners() {
+    public void commitAllTaskRunners() {
         for (TaskRunner runner: runnersList) {
             Thread t = new Thread(runner);
             t.start();
         }
     }
 
-    public String[] getRunnersTaskStatus() {
+    public String[] getTaskRunnersStatus() {
         List<String> statusDescriptions = new ArrayList<>();
         for(TaskRunner r: runnersList) {
             statusDescriptions.add(r.getStatusDescription());
