@@ -19,6 +19,7 @@ public class MainUI {
         return instance;
     }
 
+
     private void showWelcome() {
         System.out.println(
                 "\n" +
