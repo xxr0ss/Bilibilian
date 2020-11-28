@@ -202,16 +202,15 @@ public class MainUI implements OptionsListMenu {
 
     @Override
     public void handleInteraction() {
-        Scanner cmdScanner = new Scanner(System.in);
+        Scanner cmdScan = new Scanner(System.in);
         System.out.println("\n输入菜单选项");
         do {
             showListMenu();
             System.out.print("> "); // 命令提示符
-            int option = cmdScanner.nextInt() - 1; // 转换成switch-case对应的case
+            int option = cmdScan.nextInt() - 1; // 转换成switch-case对应的case
+            System.out.println("option: " + option); // DEBUG
             performOption(option);
         } while (!isWantToExit());
-
-        cmdScanner.close();
     }
 
     private void showListMenu() {

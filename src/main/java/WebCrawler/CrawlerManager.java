@@ -90,8 +90,17 @@ public class CrawlerManager {
      */
     public void commitAllTaskRunners() {
         for (TaskRunner runner: runnersList) {
-            Thread t = new Thread(runner);
-            t.start();
+            String runnerStatus = runner.getStatusDescription();
+            if (runnerStatus.equals(StatusConstants.constDescription[StatusConstants.NOT_STARTED]) ||
+            runnerStatus.equals(StatusConstants.constDescription[StatusConstants.TERMINATED]))
+            {
+                Thread t = new Thread(runner);
+                t.start();
+            } else {
+                // 虽然讲道理这里不应该出现输出语句的，不是UI模块，不过暂且这样写了
+                // TODO: 把这种情况的处理放到界面模块去
+                System.out.println(runner.getTask().getClass().getSimpleName() + " 暂时不能提交");
+            }
         }
     }
 

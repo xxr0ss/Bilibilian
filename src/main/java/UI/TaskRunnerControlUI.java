@@ -86,18 +86,15 @@ public class TaskRunnerControlUI implements Menu, OptionsListMenu {
 
     @Override
     public void handleInteraction() {
-        Scanner cmdScanner = new Scanner(System.in);
-
+        Scanner cmdScan = new Scanner(System.in);
         showOptions();
         System.out.print("> ");
-        int cmd = cmdScanner.nextInt();
+        int cmd = cmdScan.nextInt();
         if (cmd > 0 && cmd <= options.length) {
             performOption(cmd - 1);
         } else {
             System.out.println("invalid option, will go back");
         }
-
-        cmdScanner.close();
     }
 
 }

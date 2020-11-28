@@ -60,6 +60,7 @@ public class TaskRunner extends Thread {
         status = StatusConstants.RUNNING;
         super.run();
         DBManager dbManager = DBManager.getDBManager();
+        dbManager.setupDB();
         while (true) {
             task.crawl();
             try {

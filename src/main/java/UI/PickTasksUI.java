@@ -65,13 +65,13 @@ public class PickTasksUI implements PickObjectsMenu {
     public void handleInteraction() {
         getItems();
         System.out.println(getMenuTitle());
+        Scanner cmdScan = new Scanner(System.in);
         while(true) {
             for (int i = 0; i < items.length; i++) {
                 System.out.printf("[%s] %d. %s\n", currentPickState[i] ? "✔" : " ", i, items[i]);
             }
-            Scanner scan = new Scanner(System.in);
             System.out.println("输入要添加的任务编号, 输入-1确认选择");
-            int opId = scan.nextInt();
+            int opId = cmdScan.nextInt();
             if(opId == -1) {
                 break;
             }

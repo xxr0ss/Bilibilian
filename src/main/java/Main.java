@@ -15,6 +15,7 @@ public class Main {
         DBManager dbManager = DBManager.getDBManager();
         dbManager.setupDB();
 
+        Scanner cmdScan = new Scanner(System.in);
         ui.handleInteraction();
     }
 }
