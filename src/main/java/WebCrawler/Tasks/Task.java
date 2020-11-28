@@ -12,8 +12,6 @@ public abstract class Task {
 
     protected abstract void saveCrawResult(Object result);
 
-    protected abstract Object[] getStorage();
-
     // 检查爬取进度是否达到目标
     public abstract boolean taskFinished();
 

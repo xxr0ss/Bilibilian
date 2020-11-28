@@ -1,5 +1,8 @@
 package WebCrawler.Tasks;
 
+import DB.DBManager;
+import DB.DataLine;
+import DB.DataType;
 import com.alibaba.fastjson.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -20,7 +23,7 @@ public class UserInfoTask extends Task {
      */
     public UserInfoTask() {
         this.targetMid = 1;
-        this.endMid = 3;
+        this.endMid = 10; // 这么少，还爬取那么慢，b站不至于再ban我吧？
     }
 
     /* -- Task Configures START -- */
@@ -55,16 +58,14 @@ public class UserInfoTask extends Task {
 
 
     /* -- Task Configures END -- */
-
     @Override
     protected void saveCrawResult(Object result) {
         JSONObject res = (JSONObject) result;
         storage.add(res);
-    }
 
-    @Override
-    protected Object[] getStorage() {
-        return storage.toArray();
+        DBManager dbManager = DBManager.getDBManager();
+        DataLine line = new DataLine(targetMid, DataType.mid, res.toJSONString());
+        dbManager.saveDataLine(line);
     }
 
     @Override

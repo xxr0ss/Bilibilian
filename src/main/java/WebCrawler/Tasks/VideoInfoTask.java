@@ -1,6 +1,7 @@
 package WebCrawler.Tasks;
 
 public class VideoInfoTask extends Task{
+    // http://api.bilibili.com/x/web-interface/view?aid=
     @Override
     public void crawl() {
 
@@ -14,11 +15,6 @@ public class VideoInfoTask extends Task{
     @Override
     protected void saveCrawResult(Object result) {
 
-    }
-
-    @Override
-    protected Object[] getStorage() {
-        return new Object[0];
     }
 
     @Override

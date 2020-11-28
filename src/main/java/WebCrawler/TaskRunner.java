@@ -1,5 +1,7 @@
 package WebCrawler;
 
+import DB.DBManager;
+import DB.DataLine;
 import WebCrawler.Tasks.Task;
 
 /**
@@ -57,6 +59,7 @@ public class TaskRunner extends Thread {
 //        System.out.println(task.getClass().getName() + " Started"); // DEBUG
         status = StatusConstants.RUNNING;
         super.run();
+        DBManager dbManager = DBManager.getDBManager();
         while (true) {
             task.crawl();
             try {
@@ -79,6 +82,7 @@ public class TaskRunner extends Thread {
             if (task.taskFinished()) {
                 break;
             }
+            // get valid result from api, now need to save to database
         }
         onComplete();
         status = StatusConstants.TERMINATED;
