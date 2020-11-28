@@ -39,8 +39,12 @@ public class TaskRunner extends Thread {
         return StatusConstants.PAUSED == status;
     }
 
-    public void wantToPause() {
-        status = StatusConstants.PAUSED;
+    public void wantToPause(boolean pause) {
+        if (pause) {
+            status = StatusConstants.PAUSED;
+        } else {
+            status = StatusConstants.RUNNING;
+        }
     }
 
     public void wantToTerminate() {
@@ -50,12 +54,13 @@ public class TaskRunner extends Thread {
 
     @Override
     public void run() {
+//        System.out.println(task.getClass().getName() + " Started"); // DEBUG
         status = StatusConstants.RUNNING;
         super.run();
         while (true) {
             task.crawl();
             try {
-                Thread.sleep(500);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

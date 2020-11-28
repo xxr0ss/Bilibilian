@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+
 public class MainUI implements OptionsListMenu {
     private static MainUI instance;
 
@@ -65,7 +66,7 @@ public class MainUI implements OptionsListMenu {
     }
 
     /**
-     * 通过一个switch case来处理getMemuOptions里面支持的菜单选项
+     * 通过一个switch case来处理getMenuOptions里面支持的菜单选项
      *
      * @param optionIdx 选项编号（数组下标）
      */
@@ -79,7 +80,7 @@ public class MainUI implements OptionsListMenu {
                 break;
 
             case 1:
-                // TODO: 创建个taskAdder类？
+                pickIntoTaskRunner();
                 break;
 
             case 2:
@@ -123,7 +124,18 @@ public class MainUI implements OptionsListMenu {
 
     // case 1
     private void pickIntoTaskRunner() {
-        // TODO: 实现PickObjectsMenu来处理勾选类操作
+        PickTasksUI pickTaskUI = PickTasksUI.getPickTaskUI();
+        pickTaskUI.handleInteraction();
+        int[] result = pickTaskUI.getPickResult();
+        if (result.length == 0){
+            // 没有勾选任何要添加的任务
+            System.out.println("没有添加任何爬取任务");
+            return;
+        }
+        System.out.println("添加了" + result.length + "个任务");
+        for (int i = 0; i < result.length; i++) {
+            crawlerManager.addTaskRunner(i);
+        }
     }
 
     // case 2: DONE
@@ -140,11 +152,18 @@ public class MainUI implements OptionsListMenu {
         TaskRunner[] runnersList = crawlerManager.getRunnersList().toArray(new TaskRunner[0]);
         if (runnersList.length == 0) {
             System.out.println("尚无添加爬取任务");
+            return;
         }
-        System.out.println("Index      Name               Status");
+        System.out.println("Index       Name          Status");
         for (int i = 0; i < runnersList.length; i++) {
             TaskRunner runner = runnersList[i];
-            System.out.printf("%-4d %20s  %15s\n", i, runner.getName(), runner.getStatusDescription());
+            String taskName = runner.getTask().getClass().getSimpleName();
+
+            System.out.printf("%-4d %15s  %15s\n",
+                    i,
+                    taskName,
+                    runner.getStatusDescription()
+            );
         }
     }
 
@@ -153,10 +172,11 @@ public class MainUI implements OptionsListMenu {
         pressAnyKey();
     }
 
+
     // case 4
     private void controlTaskRunner() {
         // 展示可以用于操作的Runner
-        showTaskRunnersStatus();
+        showRunnersList();
         if (crawlerManager.getRunnersList().size() == 0) {
             return;
         }
@@ -166,7 +186,8 @@ public class MainUI implements OptionsListMenu {
         if (idx >= 0 && idx < crawlerManager.getRunnersList().size()) {
             System.out.printf("你选择了编号为%d的爬取任务\n", idx);
             TaskRunnerControlUI ui = TaskRunnerControlUI.getControlUI();
-
+            ui.setTaskRunnerId(idx);
+            ui.handleInteraction();
         }
     }
 
@@ -177,4 +198,28 @@ public class MainUI implements OptionsListMenu {
     }
 
     /* 各个case的具体实现 END */
+
+
+    @Override
+    public void handleInteraction() {
+        Scanner cmdScanner = new Scanner(System.in);
+        System.out.println("\n输入菜单选项");
+        do {
+            showListMenu();
+            System.out.print("> "); // 命令提示符
+            int option = cmdScanner.nextInt() - 1; // 转换成switch-case对应的case
+            performOption(option);
+        } while (!isWantToExit());
+
+        cmdScanner.close();
+    }
+
+    private void showListMenu() {
+        System.out.println("\n* " + this.getMenuTitle() + " *");
+        String[] options = getMenuOptions();
+        for (int i = 1; i <= options.length; i++) {
+            System.out.printf("[%d] %s\n", i, options[i-1]);
+        }
+        System.out.println();
+    }
 }
