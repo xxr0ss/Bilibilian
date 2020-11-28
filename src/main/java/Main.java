@@ -21,7 +21,7 @@ public class Main {
     }
 
     private static void showListMenu(OptionsListMenu ui) {
-        System.out.println("\n* " + ui.getMenuName() + " *");
+        System.out.println("\n* " + ui.getMenuTitle() + " *");
         String[] options = ui.getMenuOptions();
         for (int i = 1; i <= options.length; i++) {
             System.out.printf("[%d] %s\n", i, options[i-1]);

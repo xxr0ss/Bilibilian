@@ -21,7 +21,7 @@ public class TaskRunnerControlUI implements Menu, OptionsListMenu {
 
 
     @Override
-    public String getMenuName() {
+    public String getMenuTitle() {
         return "\n-- 从列表中选择进行操作的任务";
     }
 

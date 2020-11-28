@@ -46,7 +46,7 @@ public class MainUI implements OptionsListMenu {
 
 
     @Override
-    public String getMenuName() {
+    public String getMenuTitle() {
         return "Main Menu";
     }
 
