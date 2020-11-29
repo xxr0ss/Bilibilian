@@ -46,7 +46,6 @@ public class CrawlerManager {
         };
     }
 
-    // TODO: 维护一个Runners列表
 
     /**
      * 获取WebCrawler.Tasks底下继承Task的类的名字
@@ -103,17 +102,4 @@ public class CrawlerManager {
             }
         }
     }
-
-    public String[] getTaskRunnersStatus() {
-        List<String> statusDescriptions = new ArrayList<>();
-        for(TaskRunner r: runnersList) {
-            statusDescriptions.add(r.getStatusDescription());
-        }
-        return statusDescriptions.toArray(new String[0]);
-    }
-
-    public String tempTestQueryProgress() {
-        return runnersList.get(0).getTask().getProgressDescription();
-    }
-
 }

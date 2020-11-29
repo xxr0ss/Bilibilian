@@ -133,8 +133,8 @@ public class MainUI implements OptionsListMenu {
             return;
         }
         System.out.println("添加了" + result.length + "个任务");
+        System.out.println("请对添加的任务进行配置");
         for (int i = 0; i < result.length; i++) {
-            // TODO 处理对task进行配置
             crawlerManager.addTaskRunner(result[i]); // 之前写成i了，隐秘bug
         }
     }
@@ -148,7 +148,7 @@ public class MainUI implements OptionsListMenu {
         crawlerManager.commitAllTaskRunners();
     }
 
-    // case 3: TODO 优化显示效果
+    // case 3: DONE
     private void showRunnersList() {
         TaskRunner[] runnersList = crawlerManager.getRunnersList().toArray(new TaskRunner[0]);
         if (runnersList.length == 0) {

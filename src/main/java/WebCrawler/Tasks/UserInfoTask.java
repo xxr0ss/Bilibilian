@@ -19,45 +19,13 @@ public class UserInfoTask extends Task {
     private final List<JSONObject> storage = new ArrayList<>();
 
     /**
-     * 默认配置：从mid=1开始爬取，直到1000
+     * 默认配置：从mid=1开始爬取，直到10
      */
     public UserInfoTask() {
         this.targetMid = 1;
         this.endMid = 10; // 这么少，还爬取那么慢，b站不至于再ban我吧？
     }
 
-    /* -- Task Configures START -- */
-    /**
-     * 创建task的时候通过这里支持的方法对task进行定制，当然这里目前还只有以下的
-     *
-     * 写法就是
-     * task t = new UserInfoTask().configure1(params)
-     *                            .configure2(params)
-     *                            .configure3(params)
-     * 这样的。**而不是用构造函数去定制 **，构造函数参数列表为空，并在其中给可选配置赋值默认值
-     *
-     */
-
-    public void endMid(int mid) {
-        this.endMid = mid;
-    }
-
-    public void startMid(int mid) {
-        this.targetMid = mid;
-    }
-
-    /**
-     * Alias of using both startMid() and endMid()
-     * @param start start Mid
-     * @param end end Mid
-     */
-    public void range(int start, int end) {
-        startMid(start);
-        endMid(end);
-    }
-
-
-    /* -- Task Configures END -- */
     @Override
     protected void saveCrawResult(Object result) {
         JSONObject res = (JSONObject) result;
