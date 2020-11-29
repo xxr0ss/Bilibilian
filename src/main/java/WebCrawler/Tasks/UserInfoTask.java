@@ -103,6 +103,7 @@ public class UserInfoTask extends Task {
         } catch (IOException e) {
             e.printStackTrace();
             // TODO: 处理因网络状况导致的没能成功爬取到内容的情况
+            // TODO 利用Jsoup.connect返回的http状态码判断是不是被ban了，返回信息给UI
         }
 
         saveCrawResult(resJsonObject); // 保存这一波的爬取到的数据

@@ -134,7 +134,8 @@ public class MainUI implements OptionsListMenu {
         }
         System.out.println("添加了" + result.length + "个任务");
         for (int i = 0; i < result.length; i++) {
-            crawlerManager.addTaskRunner(i);
+            // TODO 处理对task进行配置
+            crawlerManager.addTaskRunner(result[i]); // 之前写成i了，隐秘bug
         }
     }
 
