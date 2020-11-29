@@ -58,8 +58,6 @@ public class DBManager {
         try {
             stmt = conn.createStatement();
 
-            // TODO: 去除已存在的记录
-
             String prefix = DataType.name[dataline.type];
             String sql = "insert into bilibilian.data_lines values(" +
                     "'" +prefix + dataline.id + "' ," +
@@ -80,8 +78,6 @@ public class DBManager {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-        // TODO 清空原来的所有爬取记录
     }
 }
 
