@@ -11,7 +11,7 @@ public class demo {
     public static void demoFunc() {
         DBManager dbManager = DBManager.getDBManager();
 
-        String[] datalines = dbManager.readDataLine();
+        String[] datalines = dbManager.readDataLines();
 
         List<String> trimedDatalines = new ArrayList<>();
         for( String s: datalines) {

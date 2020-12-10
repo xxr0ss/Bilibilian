@@ -77,7 +77,7 @@ public class ShowDataUI implements OptionsListMenu {
     private void showAllData() {
         DBManager dbManager = DBManager.getDBManager();
 
-        String[] datalines = dbManager.readDataLine();
+        String[] datalines = dbManager.readDataLines();
 
         List<String> trimedDatalines = new ArrayList<>();
         for (String s : datalines) {
@@ -104,7 +104,7 @@ public class ShowDataUI implements OptionsListMenu {
      */
     private void showStatistics1() {
         DBManager dbManager = DBManager.getDBManager();
-        String[] datalines = dbManager.readDataLine();
+        String[] datalines = dbManager.readDataLines();
 
         if (datalines.length == 0) {
             System.out.println("No statistics available");

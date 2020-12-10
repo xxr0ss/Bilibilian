@@ -74,7 +74,7 @@ public class DBManager {
     }
 
 
-    public String[] readDataLine() {
+    public String[] readDataLines() {
         List<String> resultList = new ArrayList<>();
 
         Statement stmt = null;
