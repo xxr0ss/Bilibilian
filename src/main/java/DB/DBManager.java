@@ -89,7 +89,7 @@ public class DBManager {
                 String id = rs.getString("id");
                 String data = rs.getString("data");
 
-                resultList.add(String.format("%s %d %s", id, type, data));
+                resultList.add(String.format("%s::%d::%s", id, type, data));
             }
 
         } catch (SQLException throwables) {

@@ -2,9 +2,9 @@ package UI;
 
 import DB.DBManager;
 import UI.menuType.OptionsListMenu;
+import com.alibaba.fastjson.JSONObject;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -80,7 +80,7 @@ public class ShowDataUI implements OptionsListMenu {
         String[] datalines = dbManager.readDataLine();
 
         List<String> trimedDatalines = new ArrayList<>();
-        for( String s: datalines) {
+        for (String s : datalines) {
             String t;
             if (s.length() > 70) {
                 t = s.substring(0, 65) + "  ...";
@@ -99,7 +99,42 @@ public class ShowDataUI implements OptionsListMenu {
         }
     }
 
+    /**
+     * 男女性别统计
+     */
     private void showStatistics1() {
+        DBManager dbManager = DBManager.getDBManager();
+        String[] datalines = dbManager.readDataLine();
 
+        if (datalines.length == 0) {
+            System.out.println("No statistics available");
+            return;
+        }
+
+        List<String> jsonStrings = new ArrayList<>();
+        for (String s : datalines) {
+            jsonStrings.add(s.split("::")[2]);
+        }
+
+        int maleCnt = 0;
+        int femaleCnt = 0;
+        int secreteCnt = 0;
+        for (String s : jsonStrings) {
+            JSONObject jsonObject = JSONObject.parseObject(s);
+            int code = jsonObject.getObject("code", Integer.class);
+            if (code != 0) {
+                return;
+            }
+            String sex = jsonObject.getJSONObject("data").getString("sex");
+            if (sex.equals("男")) maleCnt++;
+            else if (sex.equals("女")) femaleCnt++;
+            else if (sex.equals("保密")) secreteCnt++;
+        }
+
+        double sum = maleCnt + femaleCnt + secreteCnt;
+        System.out.printf("男 %.2f%%, 女 %.2f%%, 保密 %.2f%%\n",
+                (maleCnt / sum) * 100,
+                (femaleCnt / sum) * 100,
+                (secreteCnt / sum) * 100);
     }
 }
