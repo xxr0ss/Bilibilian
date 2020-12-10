@@ -57,6 +57,7 @@ public class MainUI implements OptionsListMenu {
             "执行已添加任务",
             "查看任务状态",
             "控制爬取任务",
+            "查看已爬取数据",
             "退出Bilibilian",
     };
 
@@ -96,6 +97,11 @@ public class MainUI implements OptionsListMenu {
                 break;
 
             case 5:
+                ShowDataUI showDataUI = ShowDataUI.getShowDataUI();
+                showDataUI.handleInteraction();
+                break;
+
+            case 6:
                 wantToExit = true;
                 break;
             default:
@@ -133,7 +139,7 @@ public class MainUI implements OptionsListMenu {
             return;
         }
         System.out.println("添加了" + result.length + "个任务");
-        System.out.println("请对添加的任务进行配置");
+//        System.out.println("请对添加的任务进行配置");
         for (int j : result) {
             crawlerManager.buildTaskRunnerFromTaskId(j); // 之前写成i了，隐秘bug
         }
@@ -192,8 +198,9 @@ public class MainUI implements OptionsListMenu {
         }
     }
 
+    // case 5
 
-    // case 5: DONE
+    // case 6: DONE
     public boolean isWantToExit() {
         return wantToExit;
     }

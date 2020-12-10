@@ -1,6 +1,8 @@
 package DB;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 维护爬虫模块爬取到的数据，只使用一个数据表，用一个标志列来标记爬取数据所属task类型
@@ -69,6 +71,32 @@ public class DBManager {
             System.out.println("Save data line error");
             throwables.printStackTrace();
         }
+    }
+
+
+    public String[] readDataLine() {
+        List<String> resultList = new ArrayList<>();
+
+        Statement stmt = null;
+
+        try {
+            stmt = conn.createStatement();
+            String sql = "select * from bilibilian.data_lines";
+            ResultSet rs =  stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int type = rs.getInt("type");
+                String id = rs.getString("id");
+                String data = rs.getString("data");
+
+                resultList.add(String.format("%s %d %s", id, type, data));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return resultList.toArray(new String[0]);
     }
 
     public void setupDB() {
