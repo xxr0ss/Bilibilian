@@ -13,7 +13,5 @@ public abstract class Task {
     protected abstract void saveCrawResult(Object result);
 
     // 检查爬取进度是否达到目标
-    public abstract boolean taskFinished();
-
-    public abstract String getProgressDescription();
+    public abstract boolean isFinished();
 }

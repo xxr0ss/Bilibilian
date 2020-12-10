@@ -18,12 +18,8 @@ public class VideoInfoTask extends Task{
     }
 
     @Override
-    public boolean taskFinished() {
+    public boolean isFinished() {
         return true;
     }
 
-    @Override
-    public String getProgressDescription() {
-        return null;
-    }
 }

@@ -35,7 +35,7 @@ public class PickTasksUI implements PickObjectsMenu {
     public void getItems() {
         if (items == null) {
             CrawlerManager crawlerManager = CrawlerManager.getCrawlerManager();
-            items = crawlerManager.getSupportedTasks();
+            items = crawlerManager.getSupportedTasksName();
             currentPickState = new boolean[items.length];
         }
     }

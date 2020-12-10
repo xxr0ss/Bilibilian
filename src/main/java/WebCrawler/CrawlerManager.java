@@ -51,12 +51,10 @@ public class CrawlerManager {
      * 获取WebCrawler.Tasks底下继承Task的类的名字
      * @return 任务名数组
      */
-    public String[] getSupportedTasks() {
+    public String[] getSupportedTasksName() {
         List<String> tasksName = new ArrayList<>();
         for(Task t: tasks) {
-            String classname = t.getClass().getName();
-            String[] tmp = classname.split("\\.");
-            String name = tmp[tmp.length - 1];
+            String name = t.getClass().getSimpleName();
             tasksName.add(name.substring(0, name.length()-4)); // 去掉尾部类名的"Task"
         }
         return tasksName.toArray(new String[0]);
@@ -98,7 +96,7 @@ public class CrawlerManager {
             } else {
                 // 虽然讲道理这里不应该出现输出语句的，不是UI模块，不过暂且这样写了
                 // TODO: 把这种情况的处理放到界面模块去
-                System.out.println(runner.getTask().getClass().getSimpleName() + " 暂时不能提交");
+                System.out.println(runner.getTaskName() + " 暂时不能提交");
             }
         }
     }

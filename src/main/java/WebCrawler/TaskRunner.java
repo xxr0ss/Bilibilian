@@ -1,7 +1,6 @@
 package WebCrawler;
 
 import DB.DBManager;
-import DB.DataLine;
 import WebCrawler.Tasks.Task;
 
 /**
@@ -20,12 +19,12 @@ public class TaskRunner extends Thread {
 
     private final Task task;
 
-    public Task getTask() {
-        return task;
-    }
-
     public TaskRunner(Task task) {
         this.task = task;
+    }
+
+    public String getTaskName() {
+        return task.getClass().getSimpleName();
     }
 
     // 既作为控制线程的标志，也作为返回线程状态的标志，默认状态为NOT_STARTED
@@ -64,6 +63,7 @@ public class TaskRunner extends Thread {
         while (true) {
             task.crawl();
             try {
+                // 爬虫爬取间隔时间，爬太快太多数据会被ban
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -80,7 +80,7 @@ public class TaskRunner extends Thread {
                 break;
             }
 
-            if (task.taskFinished()) {
+            if (task.isFinished()) {
                 break;
             }
             // get valid result from api, now need to save to database
@@ -102,12 +102,11 @@ public class TaskRunner extends Thread {
     private void onComplete() {
         System.out.println("task finished");
     }
-    // TODO 获取爬取进度的函数
 }
 
 class StatusConstants {
     // some constants refer to taskRunner status
-    public final static int NOT_IMPLEMENTED = 0;
+    public final static int NOT_IMPLEMENTED = 0; // reserved
 
     public final static int NOT_STARTED = 1;
 

@@ -118,7 +118,7 @@ public class MainUI implements OptionsListMenu {
 
     // case 0: DONE
     private void showSupportedTasks() {
-        System.out.println(Arrays.toString(crawlerManager.getSupportedTasks()));
+        System.out.println(Arrays.toString(crawlerManager.getSupportedTasksName()));
         pressAnyKey();
     }
 
@@ -134,8 +134,8 @@ public class MainUI implements OptionsListMenu {
         }
         System.out.println("添加了" + result.length + "个任务");
         System.out.println("请对添加的任务进行配置");
-        for (int i = 0; i < result.length; i++) {
-            crawlerManager.addTaskRunner(result[i]); // 之前写成i了，隐秘bug
+        for (int j : result) {
+            crawlerManager.addTaskRunner(j); // 之前写成i了，隐秘bug
         }
     }
 
@@ -158,7 +158,7 @@ public class MainUI implements OptionsListMenu {
         System.out.println("Index       Name          Status");
         for (int i = 0; i < runnersList.length; i++) {
             TaskRunner runner = runnersList[i];
-            String taskName = runner.getTask().getClass().getSimpleName();
+            String taskName = runner.getTaskName();
 
             System.out.printf("%-4d %15s  %15s\n",
                     i,

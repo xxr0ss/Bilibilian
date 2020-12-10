@@ -37,18 +37,14 @@ public class UserInfoTask extends Task {
     }
 
     @Override
-    public boolean taskFinished() {
+    public boolean isFinished() {
         return targetMid == endMid;
     }
 
-    @Override
-    public String getProgressDescription() {
-        return String.format("Getting mid=%d [%d/%d]", targetMid, targetMid, endMid);
-    }
 
     @Override
     protected void toNextTarget() {
-        if (taskFinished()) {
+        if (isFinished()) {
             return;
         }
         targetMid++;
