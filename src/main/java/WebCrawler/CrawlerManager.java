@@ -92,7 +92,6 @@ public class CrawlerManager {
                 t.start();
             } else {
                 // 虽然讲道理这里不应该出现输出语句的，不是UI模块，不过暂且这样写了
-                // TODO: 把这种情况的处理放到界面模块去
                 System.out.println(runner.getTaskName() + " 暂时无法提交");
             }
         }

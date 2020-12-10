@@ -65,7 +65,6 @@ public class TaskRunnerControlUI implements Menu, OptionsListMenu {
                 break;
 
             case 2:
-                // TODO: 缺少和isPaused()类似的用于确认是否停止的函数
                 taskRunner.wantToTerminate();
                 System.out.println("任务已停止");
                 break;
