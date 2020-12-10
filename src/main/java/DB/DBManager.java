@@ -44,7 +44,7 @@ public class DBManager {
     private Connection conn;
 
     private boolean connectDB(String username, String password){
-        String URL = "jdbc:mysql://localhost:3306/bilibilian?useSSL=false&serverTimezone=Asia/Shanghai";
+        String URL = "jdbc:mysql://localhost:3306/bilibilian?useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true";
         try {
             conn = DriverManager.getConnection(URL, username, password);
         } catch (SQLException throwables) {
@@ -103,6 +103,7 @@ public class DBManager {
         try {
             Statement stmt = conn.createStatement();
             stmt.execute("delete from bilibilian.data_lines");
+            System.out.println("[warning] previous data stored in database has been deleted");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

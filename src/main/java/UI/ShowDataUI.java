@@ -1,7 +1,12 @@
 package UI;
 
+import DB.DBManager;
 import UI.menuType.OptionsListMenu;
+import tech.tablesaw.api.StringColumn;
+import tech.tablesaw.api.Table;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ShowDataUI implements OptionsListMenu {
@@ -23,7 +28,7 @@ public class ShowDataUI implements OptionsListMenu {
 
     @Override
     public String getMenuTitle() {
-        return "* Data saved in the database *";
+        return "Data saved in the database";
     }
 
 
@@ -70,7 +75,28 @@ public class ShowDataUI implements OptionsListMenu {
     }
 
     private void showAllData() {
+        DBManager dbManager = DBManager.getDBManager();
 
+        String[] datalines = dbManager.readDataLine();
+
+        List<String> trimedDatalines = new ArrayList<>();
+        for( String s: datalines) {
+            String t;
+            if (s.length() > 70) {
+                t = s.substring(0, 65) + "  ...";
+            } else {
+                t = s;
+            }
+            trimedDatalines.add(t);
+        }
+
+        Table t = Table.create("raw data")
+                .addColumns(StringColumn.create("data", trimedDatalines));
+        if (t.rowCount() == 0) {
+            System.out.println("No data right now");
+        } else {
+            System.out.println(t.first(t.rowCount()));
+        }
     }
 
     private void showStatistics1() {

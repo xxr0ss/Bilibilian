@@ -28,8 +28,11 @@ public class MainUI implements OptionsListMenu {
         return instance;
     }
 
-
-    private void showWelcome() {
+    private boolean haveShowedWelcome = false;
+    private void smartShowWelcome() {
+        if (haveShowedWelcome) {
+            return;
+        }
         System.out.println(
                 "\n" +
                         "   ██████╗  ██╗ ██╗      ██╗ ██████╗  ██╗ ██╗      ██╗  █████╗  ███╗   ██╗\n" +
@@ -39,12 +42,8 @@ public class MainUI implements OptionsListMenu {
                         "   ██████╔╝ ██║ ███████╗ ██║ ██████╔╝ ██║ ███████╗ ██║ ██║  ██║ ██║ ╚████║\n" +
                         "   ╚═════╝  ╚═╝ ╚══════╝ ╚═╝ ╚═════╝  ╚═╝ ╚══════╝ ╚═╝ ╚═╝  ╚═╝ ╚═╝  ╚═══╝"
         );
+        haveShowedWelcome = true;
     }
-
-    public void uiStartUp() {
-        showWelcome();
-    }
-
 
     @Override
     public String getMenuTitle() {
@@ -115,7 +114,7 @@ public class MainUI implements OptionsListMenu {
     /* 各个case的具体实现 START */
     private void pressAnyKey() {
         try {
-            System.out.println("按任意键返回");
+            System.out.println("按回车返回");
             System.in.read();
         } catch (IOException e) {
             e.printStackTrace();
@@ -210,13 +209,13 @@ public class MainUI implements OptionsListMenu {
 
     @Override
     public void handleInteraction() {
+        smartShowWelcome();
         Scanner cmdScan = new Scanner(System.in);
-        System.out.println("\n输入菜单选项");
         do {
             showListMenu();
             System.out.print("> "); // 命令提示符
             int option = cmdScan.nextInt() - 1; // 转换成switch-case对应的case
-            System.out.println("option: " + option); // DEBUG
+//            System.out.println("option: " + option); // DEBUG
             performOption(option);
         } while (!isWantToExit());
     }
