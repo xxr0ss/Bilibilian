@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserInfoTask extends Task {
+public class UserInfoTask implements Task {
     private int targetMid;
 
     private int endMid;
@@ -27,7 +27,7 @@ public class UserInfoTask extends Task {
     }
 
     @Override
-    protected void saveCrawResult(Object result) {
+    public void saveCrawResult(Object result) {
         JSONObject res = (JSONObject) result;
         storage.add(res);
 
@@ -43,7 +43,7 @@ public class UserInfoTask extends Task {
 
 
     @Override
-    protected void toNextTarget() {
+    public void toNextTarget() {
         if (isFinished()) {
             return;
         }

@@ -72,14 +72,11 @@ public class CrawlerManager {
     /**
      * 往Runner列表添加计划task
      * @param taskId 支持的task在getSupportedTasks() 数组的下标
-     * @return 添加的runner id, 也就是在runnersList 上的下标
      */
-    public int addTaskRunner(int taskId) {
+    public void buildTaskRunnerFromTaskId(int taskId) {
         int index = runnersList.size();
         TaskRunner runner = new TaskRunner(tasks[taskId]);
         runnersList.add(runner);
-
-        return index;
     }
 
     /**
@@ -96,7 +93,7 @@ public class CrawlerManager {
             } else {
                 // 虽然讲道理这里不应该出现输出语句的，不是UI模块，不过暂且这样写了
                 // TODO: 把这种情况的处理放到界面模块去
-                System.out.println(runner.getTaskName() + " 暂时不能提交");
+                System.out.println(runner.getTaskName() + " 暂时无法提交");
             }
         }
     }

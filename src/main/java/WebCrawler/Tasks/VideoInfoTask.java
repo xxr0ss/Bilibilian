@@ -1,6 +1,6 @@
 package WebCrawler.Tasks;
 
-public class VideoInfoTask extends Task{
+public class VideoInfoTask implements Task {
     // http://api.bilibili.com/x/web-interface/view?aid=
     @Override
     public void crawl() {
@@ -8,18 +8,17 @@ public class VideoInfoTask extends Task{
     }
 
     @Override
-    protected void toNextTarget() {
+    public void toNextTarget() {
 
     }
 
     @Override
-    protected void saveCrawResult(Object result) {
+    public void saveCrawResult(Object result) {
 
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
-
 }
