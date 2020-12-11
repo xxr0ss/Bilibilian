@@ -26,7 +26,7 @@ public class PickTasksUI implements PickObjectsMenu {
 
     @Override
     public String getMenuTitle() {
-        return "- 选择要添加的任务";
+        return "选择要添加的任务";
     }
 
     private static String[] items;
@@ -71,7 +71,16 @@ public class PickTasksUI implements PickObjectsMenu {
                 System.out.printf("[%s] %d. %s\n", currentPickState[i] ? "✔" : " ", i, items[i]);
             }
             System.out.println("输入要添加的任务编号, 输入-1确认选择");
-            int opId = cmdScan.nextInt();
+            int opId = 0;
+            while(true) {
+                try {
+                    opId = Integer.parseInt(cmdScan.nextLine()); // 转换成switch-case对应的case
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("请输入正确的数字");
+                }
+            }
+
             if(opId == -1) {
                 break;
             }
@@ -79,7 +88,7 @@ public class PickTasksUI implements PickObjectsMenu {
             if (opId >= 0 && opId < items.length) {
                 checkOption(opId);
             }else {
-                System.out.println("输入错误,请重试");
+                System.out.println("输入数字范围错误,请重试");
             }
         }
     }

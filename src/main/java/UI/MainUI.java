@@ -6,6 +6,7 @@ import WebCrawler.TaskRunner;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -53,7 +54,7 @@ public class MainUI implements OptionsListMenu {
     private final String[] options = new String[]{
             "查看当前支持的爬取目标",
             "添加爬取目标到任务列表",
-            "执行已添加任务",
+            "执行全部已添加任务",
             "查看任务状态",
             "控制爬取任务",
             "查看已爬取数据",
@@ -188,12 +189,21 @@ public class MainUI implements OptionsListMenu {
         }
         System.out.println("请输入要执行操作的任务编号");
         Scanner scan = new Scanner(System.in);
-        int idx = scan.nextInt();
-        if (idx >= 0 && idx < crawlerManager.getRunnersList().size()) {
-            System.out.printf("你选择了编号为%d的爬取任务\n", idx);
-            TaskRunnerControlUI ui = TaskRunnerControlUI.getControlUI();
-            ui.setTaskRunnerId(idx);
-            ui.handleInteraction();
+        while (true) {
+            try {
+                int idx = Integer.parseInt(scan.nextLine());
+                if (idx >= 0 && idx < crawlerManager.getRunnersList().size()) {
+                    System.out.printf("你选择了编号为%d的爬取任务\n", idx);
+                    TaskRunnerControlUI ui = TaskRunnerControlUI.getControlUI();
+                    ui.setTaskRunnerId(idx);
+                    ui.handleInteraction();
+                    break;
+                } else {
+                    System.out.println("输入数字范围错误，请重试");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("请输入数字！");
+            }
         }
     }
 
@@ -213,9 +223,18 @@ public class MainUI implements OptionsListMenu {
         Scanner cmdScan = new Scanner(System.in);
         do {
             showListMenu();
-            System.out.print("> "); // 命令提示符
-            int option = cmdScan.nextInt() - 1; // 转换成switch-case对应的case
-//            System.out.println("option: " + option); // DEBUG
+
+            int option = 0;
+            do {
+                System.out.print("> "); // 命令提示符
+                try {
+                    option = Integer.parseInt(cmdScan.nextLine()); // 转换成switch-case对应的case
+                    option -= 1;
+                } catch (NumberFormatException e) {
+                    System.out.println("请输入正确的数字");
+                    option = -1;
+                }
+            } while (option < 0 || option >= options.length);
             performOption(option);
         } while (!isWantToExit());
     }
@@ -226,6 +245,5 @@ public class MainUI implements OptionsListMenu {
         for (int i = 1; i <= options.length; i++) {
             System.out.printf("[%d] %s\n", i, options[i-1]);
         }
-        System.out.println();
     }
 }

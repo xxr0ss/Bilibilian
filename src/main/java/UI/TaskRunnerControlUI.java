@@ -87,12 +87,19 @@ public class TaskRunnerControlUI implements Menu, OptionsListMenu {
     public void handleInteraction() {
         Scanner cmdScan = new Scanner(System.in);
         showOptions();
-        System.out.print("> ");
-        int cmd = cmdScan.nextInt();
-        if (cmd > 0 && cmd <= options.length) {
-            performOption(cmd - 1);
-        } else {
-            System.out.println("invalid option, will go back");
+        while (true) {
+            System.out.print("> ");
+            try {
+                int cmd = Integer.parseInt(cmdScan.nextLine()); // 转换成switch-case对应的case
+                if (cmd > 0 && cmd <= options.length) {
+                    performOption(cmd - 1);
+                    break;
+                } else {
+                    System.out.println("输入的数字范围错误, 请重试");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("请输入正确的数字");
+            }
         }
     }
 
